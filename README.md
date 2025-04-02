@@ -1,131 +1,56 @@
-# React Frontend and Python Backend Demo Application
+# Burp Suite Traversal Scanner Extension
 
-This demo application showcases a simple web application built with a React frontend and a Python (Flask) backend. It provides a basic structure for building full-stack web applications and demonstrates communication between the frontend and backend.
+This Burp Suite extension, `TraversalScanner.java`, actively scans for file path traversal vulnerabilities. It extracts URLs from HTTP responses, constructs payloads, and sends requests in parallel. Results are reported through Burp Suite's logging and alert systems.
 
 ## Features
 
-* **React Frontend:**
-  * A user-friendly interface built with React.
-  * Demonstrates how to make asynchronous API calls to the Python backend.
-  * Simple component structure for easy understanding.
-* **Python (Flask) Backend:**
-  * A lightweight RESTful API built with Flask.
-  * Handles requests from the React frontend.
-  * Provides example endpoints for data retrieval and processing.
-  * Uses CORS to allow cross origin requests.
-
-## Technologies Used
-
-* **Frontend:**
-  * React
-  * JavaScript (ES6+)
-  * Axios (for API requests)
-* **Backend:**
-  * Python 3
-  * Flask
-  * Flask-CORS
-
-## Setup and Installation
-
-1. **Backend Setup (Python):**
-
-    * Ensure Python 3 is installed.
-    * Navigate to the `backend` directory.
-    * Create a virtual environment (recommended):
-
-        ```bash
-        python3 -m venv venv
-        source venv/bin/activate  # On macOS/Linux
-        venv\Scripts\activate  # On Windows
-        ```
-
-    * Install the required Python packages:
-
-        ```bash
-        pip install Flask Flask-CORS
-        ```
-
-    * Run the Flask application:
-
-        ```bash
-        python app/__init__.py
-        ```
-
-    * The backend will start running on `http://127.0.0.1:5000/`.
-
-2. **Frontend Setup (React):**
-
-    * Ensure Node.js and npm (Node Package Manager) are installed.
-    * Navigate to the `frontend` directory.
-    * Install the required npm packages:
-
-        ```bash
-        npm install
-        ```
-
-    * Start the React development server:
-
-        ```bash
-        npm start
-        ```
-
-    * The React application will open in your browser, typically at `http://localhost:3000`.
-
-## Project Structure
-
-oLzlDRHtw8/
-    ├── README.md
-    ├── backend
-    │   ├── app
-    │   │   ├── init.py
-    │   │   └── api.py
-    │   ├── database.db
-    │   └── main.py
-    └── frontend
-        ├── README.md
-        ├── package-lock.json
-        ├── package.json
-        ├── public
-        │   ├── favicon.ico
-        │   ├── index.html
-        │   ├── logo192.png
-        │   ├── logo512.png
-        │   ├── manifest.json
-        │   └── robots.txt
-        └── src
-            ├── App.css
-            ├── App.js
-            ├── App.test.js
-            ├── components
-            │   └── Modal.js
-            ├── index.css
-            ├── index.js
-            ├── logo.svg
-            ├── reportWebVitals.js
-            └── setupTests.js
+* **URL Extraction:** Extracts URLs from HTML and CSS content within HTTP responses.
+* **Parameter Parsing:** Parses URL parameters to identify potential injection points.
+* **Parallel Requests:** Sends traversal requests in parallel using `sendRequests(List<HttpRequest> requests)` for improved performance.
+* **Vulnerability Reporting:** Reports potential vulnerabilities through Burp Suite's logging and alerts.
+* **Payload Encoding:** URL-encodes payloads to ensure proper handling by target applications.
+* **Base URL and Parameter Handling:** Tests both base URLs and URLs with parameters for traversal vulnerabilities.
 
 ## Usage
 
-* The React frontend will display data fetched from the Python backend.
-* Interact with the frontend to trigger API calls and observe the responses.
-* Modify the React components and Python endpoints to experiment with different functionalities.
+1. **Compilation:**
+    * Compile `TraversalScanner.java` into a JAR file using a Java compiler (e.g., `javac`).
+    * Ensure the Burp Suite Extender API JAR file (`burp-extender-api.jar`) is included in the classpath during compilation.
 
-## Customization
+    ```bash
+    javac -cp burp-extender-api.jar TraversalScanner.java
+    jar cvf TraversalScanner.jar TraversalScanner.class
+    ```
 
-* Modify the React components in the `frontend/src` directory to change the user interface.
-* Modify the Python endpoints in the `backend/app/__init__.py` file to add or change backend logic.
-* Adjust the CORS settings within the python backend, to allow for different origins.
+2. **Loading in Burp Suite:**
+    * Open Burp Suite.
+    * Navigate to `Extender` > `Extensions`.
+    * Click `Add`.
+    * Select "Java" as the extension type.
+    * Choose the generated `TraversalScanner.jar` file.
+    * Click `Next`.
+    * The extension will automatically begin processing HTTP responses.
 
-## Notes
+3. **Operation:**
+    * The extension will automatically process HTTP responses intercepted by Burp Suite.
+    * It will extract URLs, construct traversal payloads, and send requests in parallel.
+    * Potential vulnerabilities will be reported in Burp Suite's logging and alerts.
 
-* This is a basic demo application and can be extended with more features and functionalities.
-* Ensure the backend and frontend are running simultaneously for proper communication.
-* For production, consider using a more robust web server for the backend, and creating a production build of the react application.
+## Dependencies
 
-## Author
+* Burp Suite with Montoya API support.
 
-Peter Obiechina
+## Important Notes
+
+* **Ethical Use:** This extension is intended for ethical security testing purposes only. Use it responsibly and only on systems you have explicit permission to test.
+* **Payload Customization:** Adjust the `payloads` array in the code as needed for specific target environments.
+* **Burp Suite Configuration:** Ensure Burp Suite's proxy and other settings are configured correctly to intercept and process HTTP traffic.
+* **Montoya API:** Requires Burp Suite with Montoya API support.
+
+## Contributing
+
+Contributions and improvements are welcome. If you find any bugs or have suggestions for new features, please feel free to submit a pull request or open an issue.
 
 ## License
 
-This project is provided as-is. Please use it responsibly and ethically. No warranties are provided.
+This extension is provided as-is. Please use it responsibly and ethically. No warranties are provided.
