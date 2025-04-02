@@ -5,8 +5,6 @@
  * It extracts URLs from HTTP responses, constructs payloads, and sends requests in parallel.
  * Results are reported through Burp Suite's logging and alert systems.
  *
- * Author: [Your Name/Handle]
- * Date: [Current Date]
  * Version: 1.0
  *
  * Usage:
